@@ -1,3 +1,14 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+
+# Build directory
+build/
+out/
+
 # Compiled class file
 *.class
 
