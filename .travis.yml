@@ -1,1 +1,18 @@
+# Speed up build using Travis caches
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
 language: java
+
+jdk:
+  - oraclejdk9
+
+# Skip installation step completely because './gradlew assemble' and later './gradlew check' is actually
+# slower than './gradlew build'
+install:
+  - true
+
+script:
+  - ./gradlew build
