@@ -13,4 +13,5 @@ out/
 *.class
 
 # Log file
+logs/
 *.log
