@@ -7,7 +7,8 @@ public class ErrorResponse extends Response {
     private Throwable cause;
     private String message;
 
-    public ErrorResponse(String message, Throwable cause) {
+    public ErrorResponse(String message, Throwable cause, String transactionId) {
+        super(transactionId);
         this.cause = cause;
         this.message = message;
     }
@@ -18,5 +19,10 @@ public class ErrorResponse extends Response {
 
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public String getResponseText() {
+        return "Invalid response: " + getMessage();
     }
 }

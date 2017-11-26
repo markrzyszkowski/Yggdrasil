@@ -30,6 +30,12 @@ public class ResponseRouter implements ResponseDispatcher {
         responses.add(response);
     }
 
+    @Override
+    public void awaitResponse(String transactionId) {
+        throw new UnsupportedOperationException("Critical error: attempt to force ResponseRouter to directly " +
+                                                "interface with a chat engine");
+    }
+
     @Scheduled(fixedRate = 1000)
     private void dispatch() {
         if (!responses.isEmpty()) {

@@ -2,9 +2,13 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Request;
 
-public class PlaceholderRequest extends Request {
+public class UppercaseRequest extends Request {
 
     private String value;
+
+    public UppercaseRequest(String transactionId) {
+        super(transactionId);
+    }
 
     public String getValue() {
 
@@ -13,12 +17,12 @@ public class PlaceholderRequest extends Request {
 
     @Override
     public String toString() {
-        return "PlaceholderRequest{" +
+        return "UppercaseRequest{" +
                "value='" + value + '\'' +
                '}';
     }
 
-    public PlaceholderRequest withValue(String value) {
+    public UppercaseRequest withValue(String value) {
         this.value = value;
         return this;
     }

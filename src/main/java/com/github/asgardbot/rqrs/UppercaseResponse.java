@@ -2,22 +2,31 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Response;
 
-public class PlaceholderResponse extends Response {
+public class UppercaseResponse extends Response {
 
     private String value;
+
+    public UppercaseResponse(String transactionId) {
+        super(transactionId);
+    }
+
+    @Override
+    public String getResponseText() {
+        return getValue();
+    }
 
     public String getValue() {
         return value;
     }
 
-    public PlaceholderResponse withValue(String value) {
+    public UppercaseResponse withValue(String value) {
         this.value = value;
         return this;
     }
 
     @Override
     public String toString() {
-        return "PlaceholderResponse{" +
+        return "UppercaseResponse{" +
                "value='" + value + '\'' +
                '}';
     }

@@ -44,7 +44,7 @@ public class MessageRouter implements MessageDispatcher {
             try {
                 response = serviceResolver.process(request);
             } catch (InvalidRequestException e) {
-                response = new ErrorResponse("Could not process request ", e);
+                response = new ErrorResponse("Could not process request ", e, request.getTransactionId());
                 LOGGER.error("Invalid request {}", e.getRequest());
             }
 
