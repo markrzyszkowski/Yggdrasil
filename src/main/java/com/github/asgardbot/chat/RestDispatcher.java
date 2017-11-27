@@ -38,8 +38,11 @@ public class RestDispatcher implements ResponseDispatcher {
 
     @GetMapping("/responses")
     public List<String> getResponses() {
-        List<String> result = new ArrayList<>(pendingResponses);
+        return new ArrayList<>(pendingResponses);
+    }
+
+    @GetMapping("/clear")
+    public void clear() {
         pendingResponses.clear();
-        return result;
     }
 }
