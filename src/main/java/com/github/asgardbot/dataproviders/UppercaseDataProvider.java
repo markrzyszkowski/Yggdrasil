@@ -1,37 +1,57 @@
 package com.github.asgardbot.dataproviders;
 
-import com.github.asgardbot.commons.InvalidRequestException;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.commons.ServiceId;
 import com.github.asgardbot.rqrs.UppercaseRequest;
 import com.github.asgardbot.rqrs.UppercaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
-public class UppercaseDataProvider implements DataProvider {
+@RestController
+public class UppercaseDataProvider extends AbstractDataProvider {
 
     private Logger LOGGER = LoggerFactory.getLogger(UppercaseDataProvider.class);
+    @Autowired
+    Environment environment;
+
 
     @Override
-    public UppercaseResponse process(Request request) throws InvalidRequestException {
-        LOGGER.debug("Attempting to process a request");
-        if (request instanceof UppercaseRequest) {
-            UppercaseRequest rq = (UppercaseRequest) request;
+    protected Logger getLogger() {
+        return LOGGER;
+    }
 
-            LOGGER.info("Request is UppercaseRequest, able to process");
-            LOGGER.debug(request.toString());
+    @Override
+    protected boolean canProcess(Request request) {
+        return request instanceof UppercaseRequest;
+    }
 
-            return new UppercaseResponse(rq.getTransactionId()).withValue(rq.getValue().toUpperCase());
-        } else {
-            LOGGER.debug("Not a UppercaseRequest");
-            return null;
-        }
+    @Override
+    protected String prepareRequest(Request request) {
+        UppercaseRequest rq = (UppercaseRequest) request;
+        return String.format("http://localhost:%s/internal/upper/%s",
+                environment.getProperty("local.server.port"),
+                rq.getValue());
+    }
+
+    @Override
+    protected UppercaseResponse processResponse(String responsePayload) {
+        return new UppercaseResponse().withValue(responsePayload);
     }
 
     @Override
     public ServiceId getServiceId() {
         return new ServiceId("uppercase");
+    }
+
+    @RequestMapping("/internal/upper/{payload}")
+    @ResponseBody
+    public String makeUppercase(@PathVariable String payload) {
+        return payload.toUpperCase();
     }
 }

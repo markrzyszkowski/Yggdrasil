@@ -32,7 +32,9 @@ public class RestEndpoint {
         LOGGER.info("New request from REST");
         LOGGER.debug("{} {}", id, query);
 
-        router.enqueueRequest(new UppercaseRequest(id).withValue(query));
+        router.enqueueRequest(new UppercaseRequest()
+                .withValue(query)
+                .withTransactionId(id));
         dispatcher.awaitResponse(id);
 
         return new RedirectView("/responses");

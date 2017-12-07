@@ -6,10 +6,6 @@ public class UppercaseRequest extends Request {
 
     private String value;
 
-    public UppercaseRequest(String transactionId) {
-        super(transactionId);
-    }
-
     public String getValue() {
 
         return value;
@@ -17,9 +13,7 @@ public class UppercaseRequest extends Request {
 
     @Override
     public String toString() {
-        return "UppercaseRequest{" +
-               "value='" + value + '\'' +
-               '}';
+        return "UppercaseRequest{" + "value='" + value + "'}";
     }
 
     public UppercaseRequest withValue(String value) {

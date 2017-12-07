@@ -4,8 +4,9 @@ public abstract class Request {
 
     protected String transactionId;
 
-    public Request(String transactionId) {
+    public Request withTransactionId(String transactionId) {
         this.transactionId = transactionId;
+        return this;
     }
 
     public String getTransactionId() {

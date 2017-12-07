@@ -7,8 +7,7 @@ public class ErrorResponse extends Response {
     private Throwable cause;
     private String message;
 
-    public ErrorResponse(String message, Throwable cause, String transactionId) {
-        super(transactionId);
+    public ErrorResponse(String message, Throwable cause) {
         this.cause = cause;
         this.message = message;
     }

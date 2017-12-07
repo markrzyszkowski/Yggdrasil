@@ -1,9 +1,6 @@
 package com.github.asgardbot.core;
 
-import com.github.asgardbot.commons.InvalidRequestException;
-import com.github.asgardbot.commons.Request;
-import com.github.asgardbot.commons.Response;
-import com.github.asgardbot.commons.ServiceId;
+import com.github.asgardbot.commons.*;
 import com.github.asgardbot.dataproviders.DataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +21,7 @@ public class ServiceResolver implements DataProvider {
     }
 
     @Override
-    public Response process(Request request) throws InvalidRequestException {
+    public Response process(Request request) throws InvalidRequestException, InvalidResponseException {
         Response response = null;
         LOGGER.info("Trying to find a service for request");
         for (DataProvider service : services) {

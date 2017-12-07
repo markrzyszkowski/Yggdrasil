@@ -2,6 +2,7 @@ package com.github.asgardbot.core;
 
 import com.github.asgardbot.chat.ResponseDispatcher;
 import com.github.asgardbot.commons.InvalidRequestException;
+import com.github.asgardbot.commons.InvalidResponseException;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.commons.Response;
 import com.github.asgardbot.dataproviders.DataProvider;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -44,10 +46,17 @@ public class MessageRouter implements MessageDispatcher {
             try {
                 response = serviceResolver.process(request);
             } catch (InvalidRequestException e) {
-                response = new ErrorResponse("Could not process request ", e, request.getTransactionId());
+                response = new ErrorResponse("Could not process request ", e);
                 LOGGER.error("Invalid request {}", e.getRequest());
+            } catch (InvalidResponseException e) {
+                response = new ErrorResponse("Could not process response", e);
+                LOGGER.error("Invalid response {}", e.getResponse());
+            } catch (HttpStatusCodeException e) {
+                response = new ErrorResponse("Server responded with an error code " + e.getStatusCode(), e);
+                LOGGER.error("Error code {} from external API for request {}", e.getStatusCode(), request);
             }
 
+            response.withTransactionId(request.getTransactionId());
             responseDispatcher.enqueueResponse(response);
         } else {
             LOGGER.debug("Request queue empty");

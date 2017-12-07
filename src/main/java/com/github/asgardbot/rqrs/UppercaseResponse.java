@@ -6,10 +6,6 @@ public class UppercaseResponse extends Response {
 
     private String value;
 
-    public UppercaseResponse(String transactionId) {
-        super(transactionId);
-    }
-
     @Override
     public String getResponseText() {
         return getValue();
@@ -26,8 +22,6 @@ public class UppercaseResponse extends Response {
 
     @Override
     public String toString() {
-        return "UppercaseResponse{" +
-               "value='" + value + '\'' +
-               '}';
+        return "UppercaseResponse{" + "value='" + value + "'}";
     }
 }
