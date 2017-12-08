@@ -16,12 +16,12 @@ public class ErrorResponse extends Response {
         return cause;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     @Override
     public String getResponseText() {
         return "Invalid response: " + getMessage();
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

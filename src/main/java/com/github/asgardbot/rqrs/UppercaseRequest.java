@@ -7,7 +7,6 @@ public class UppercaseRequest extends Request {
     private String value;
 
     public String getValue() {
-
         return value;
     }
 

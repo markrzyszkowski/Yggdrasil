@@ -37,9 +37,9 @@ public class MessageRouter implements MessageDispatcher {
         requests.add(request);
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 100)
     private void process() {
-        if (!requests.isEmpty()) {
+        while (!requests.isEmpty()) {
             LOGGER.debug("Attempting to process a request");
             Request request = requests.poll();
             Response response;
@@ -58,8 +58,6 @@ public class MessageRouter implements MessageDispatcher {
 
             response.withTransactionId(request.getTransactionId());
             responseDispatcher.enqueueResponse(response);
-        } else {
-            LOGGER.debug("Request queue empty");
         }
     }
 }

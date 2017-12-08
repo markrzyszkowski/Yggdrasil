@@ -1,6 +1,9 @@
 package com.github.asgardbot.core;
 
-import com.github.asgardbot.commons.*;
+import com.github.asgardbot.commons.InvalidRequestException;
+import com.github.asgardbot.commons.InvalidResponseException;
+import com.github.asgardbot.commons.Request;
+import com.github.asgardbot.commons.Response;
 import com.github.asgardbot.dataproviders.DataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +41,5 @@ public class ServiceResolver implements DataProvider {
             throw new InvalidRequestException(request);
         }
         return response;
-    }
-
-    @Override
-    public ServiceId getServiceId() {
-        return null;
     }
 }

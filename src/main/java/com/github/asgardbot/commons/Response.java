@@ -4,6 +4,8 @@ public abstract class Response {
 
     protected String transactionId;
 
+    public abstract String getResponseText();
+
     public Response withTransactionId(String transactionId) {
         this.transactionId = transactionId;
         return this;
@@ -12,6 +14,4 @@ public abstract class Response {
     public String getTransactionId() {
         return transactionId;
     }
-
-    public abstract String getResponseText();
 }

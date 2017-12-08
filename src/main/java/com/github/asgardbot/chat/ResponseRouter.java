@@ -36,14 +36,12 @@ public class ResponseRouter implements ResponseDispatcher {
                                                 "interface with a chat engine");
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 100)
     private void dispatch() {
-        if (!responses.isEmpty()) {
+        while (!responses.isEmpty()) {
             LOGGER.info("Processing a response");
             Response response = responses.poll();
             dispatchers.forEach(dispatcher -> dispatcher.enqueueResponse(response));
-        } else {
-            LOGGER.debug("Response queue empty");
         }
     }
 }

@@ -12,9 +12,9 @@ public abstract class AbstractDataProvider implements DataProvider {
 
     protected abstract boolean canProcess(Request request);
 
-    protected abstract String prepareRequest(Request request);
+    protected abstract String prepareRequest(Request request) throws InvalidRequestException;
 
-    protected abstract Response processResponse(String response);
+    protected abstract Response processResponse(String response) throws InvalidResponseException;
 
     private String communicate(String request) {
         RestTemplate restTemplate = new RestTemplate();
@@ -27,9 +27,6 @@ public abstract class AbstractDataProvider implements DataProvider {
         }
         return response.getBody();
     }
-
-    @Override
-    public abstract ServiceId getServiceId();
 
     @Override
     public Response process(Request request) throws InvalidRequestException, InvalidResponseException {
