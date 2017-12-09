@@ -9,7 +9,7 @@ public class WeatherParser implements Parser {
     @Override
     public WeatherRequest parse(String query) {
         String[] tokens = query.split(" ");
-        if (tokens[0].equals("!weather")) {
+        if (tokens.length == 2 && tokens[0].equalsIgnoreCase("!weather")) {
             return new WeatherRequest().withCity(tokens[1]);
         }
         return null;

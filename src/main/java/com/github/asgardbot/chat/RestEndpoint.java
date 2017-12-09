@@ -3,6 +3,7 @@ package com.github.asgardbot.chat;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.core.MessageDispatcher;
 import com.github.asgardbot.parsing.Parser;
+import com.github.asgardbot.rqrs.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,13 +39,15 @@ public class RestEndpoint {
         LOGGER.debug("{} {}", id, query);
 
         Request request = queryParser.parse(query);
-        if (request == null) {
-            request = new Request() {
-            };
-        }
-
-        router.enqueueRequest(request.withTransactionId(id));
         dispatcher.awaitResponse(id);
+
+        if (request != null) {
+            router.enqueueRequest(request.withTransactionId(id));
+        } else {
+            LOGGER.error("Invalid query string {}", query);
+            dispatcher.enqueueResponse(new ErrorResponse("Invalid query string", null)
+                                         .withTransactionId(id));
+        }
 
         return new RedirectView("/responses");
     }
