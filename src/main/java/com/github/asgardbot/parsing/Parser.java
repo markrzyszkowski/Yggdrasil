@@ -6,3 +6,4 @@ public interface Parser {
 
     Request parse(String query);
 }
+

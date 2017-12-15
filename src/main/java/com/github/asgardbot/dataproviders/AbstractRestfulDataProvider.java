@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public abstract class AbstractDataProvider implements DataProvider {
+public abstract class AbstractRestfulDataProvider implements DataProvider {
 
     protected abstract Logger getLogger();
 

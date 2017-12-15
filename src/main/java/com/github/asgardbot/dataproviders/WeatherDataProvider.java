@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class WeatherDataProvider extends AbstractDataProvider {
+public class WeatherDataProvider extends AbstractRestfulDataProvider {
 
     @Value("#{systemEnvironment['OPEN_WEATHER_MAP_KEY']}")
     private String apiKey;

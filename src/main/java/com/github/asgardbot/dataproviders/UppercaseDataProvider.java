@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UppercaseDataProvider extends AbstractDataProvider {
+public class UppercaseDataProvider extends AbstractRestfulDataProvider {
 
     @Autowired
     private Environment environment;
