@@ -2,7 +2,6 @@ package com.github.asgardbot.dataproviders;
 
 import com.github.asgardbot.commons.InvalidResponseException;
 import com.github.asgardbot.commons.Request;
-import com.github.asgardbot.commons.Response;
 import com.github.asgardbot.rqrs.YouTubeRequest;
 import com.github.asgardbot.rqrs.YouTubeResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -30,7 +29,7 @@ public class YouTubeDataProvider implements DataProvider {
     }
 
     @Override
-    public Response process(Request request) throws InvalidResponseException {
+    public YouTubeResponse process(Request request) throws InvalidResponseException {
         LOGGER.info("Attempting to process a request");
         LOGGER.debug(request.toString());
         if (request instanceof YouTubeRequest) {
