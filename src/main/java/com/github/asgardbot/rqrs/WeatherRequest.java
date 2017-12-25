@@ -14,4 +14,12 @@ public class WeatherRequest extends Request {
     public String getCity() {
         return city;
     }
+
+    @Override
+    public String toString() {
+        return "WeatherRequest{" +
+               "city='" + city + '\'' +
+               ", transactionId='" + transactionId + '\'' +
+               '}';
+    }
 }

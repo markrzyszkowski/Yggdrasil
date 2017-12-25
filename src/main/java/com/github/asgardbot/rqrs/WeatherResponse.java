@@ -21,4 +21,12 @@ public class WeatherResponse extends Response {
                    .map(e -> String.format("%s: %s", e.getKey(), e.getValue()))
                    .collect(Collectors.joining(" "));
     }
+
+    @Override
+    public String toString() {
+        return "WeatherResponse{" +
+               "data=" + data +
+               ", transactionId='" + transactionId + '\'' +
+               '}';
+    }
 }
