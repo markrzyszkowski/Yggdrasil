@@ -14,4 +14,9 @@ public class NewsParser implements Parser {
         }
         return null;
     }
+
+    @Override
+    public String getCommand() {
+        return "!news";
+    }
 }

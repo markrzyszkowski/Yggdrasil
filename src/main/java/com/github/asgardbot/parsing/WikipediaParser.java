@@ -20,4 +20,9 @@ public class WikipediaParser implements Parser {
         }
         return null;
     }
+
+    @Override
+    public String getCommand() {
+        return "!wiki [query]";
+    }
 }

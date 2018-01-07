@@ -31,4 +31,9 @@ public class ExclamationParser implements Parser {
         }
         return nlpParser.parse(query);
     }
+
+    @Override
+    public String getCommand() {
+        return null;
+    }
 }

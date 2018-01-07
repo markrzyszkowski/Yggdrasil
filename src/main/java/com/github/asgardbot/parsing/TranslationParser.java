@@ -20,4 +20,9 @@ public class TranslationParser implements Parser {
         }
         return null;
     }
+
+    @Override
+    public String getCommand() {
+        return "!translate [from_lang] [to_lang] [phrase]";
+    }
 }

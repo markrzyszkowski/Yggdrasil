@@ -15,4 +15,9 @@ public class UppercaseParser implements Parser {
         }
         return null;
     }
+
+    @Override
+    public String getCommand() {
+        return "!upper [text]";
+    }
 }

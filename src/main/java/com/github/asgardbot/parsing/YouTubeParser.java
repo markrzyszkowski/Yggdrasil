@@ -24,4 +24,9 @@ public class YouTubeParser implements Parser {
         }
         return null;
     }
+
+    @Override
+    public String getCommand() {
+        return "!youtube [video|channel|playlist] [name]";
+    }
 }

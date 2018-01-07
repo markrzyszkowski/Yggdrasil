@@ -21,4 +21,9 @@ public class GoogleSearchParser implements Parser {
         }
         return null;
     }
+
+    @Override
+    public String getCommand() {
+        return String.format("!search [query]%n!imagesearch [query]");
+    }
 }
