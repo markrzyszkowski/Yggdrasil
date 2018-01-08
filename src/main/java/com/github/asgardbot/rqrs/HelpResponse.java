@@ -11,10 +11,10 @@ public class HelpResponse extends Response {
     private List<String> commands;
 
     @Override
-    public String getResponseText() {
+    public List<String> getMessages() {
         Stream<String> cmdStream = commands.stream();
-        return Stream.concat(cmdStream, Stream.of("Try also queries in natural language"))
-                     .collect(Collectors.joining(System.lineSeparator()));
+        return List.of(Stream.concat(cmdStream, Stream.of("Try also queries in natural language"))
+                             .collect(Collectors.joining(System.lineSeparator())));
     }
 
     public HelpResponse withCommands(List<String> commands) {

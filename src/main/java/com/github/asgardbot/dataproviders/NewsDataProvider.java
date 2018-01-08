@@ -30,7 +30,7 @@ public class NewsDataProvider extends AbstractRestfulDataProvider {
     }
 
     @Override
-    protected boolean canProcess(Request request) {
+    public boolean canProcess(Request request) {
         return request instanceof NewsRequest;
     }
 

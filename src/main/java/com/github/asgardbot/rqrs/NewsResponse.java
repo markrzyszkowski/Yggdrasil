@@ -15,14 +15,12 @@ public class NewsResponse extends Response {
     }
 
     @Override
-    public String getResponseText() {
-        StringBuilder builder = new StringBuilder();
+    public List<String> getMessages() {
         if (!headlines.isEmpty()) {
-            headlines.forEach(headline -> builder.append(headline).append(System.lineSeparator()));
+            return headlines;
         } else {
-            builder.append("No articles found");
+            return List.of("No articles found");
         }
-        return builder.toString();
     }
 
     @Override

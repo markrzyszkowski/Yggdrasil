@@ -2,6 +2,8 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Response;
 
+import java.util.List;
+
 public class ErrorResponse extends Response {
 
     private Throwable cause;
@@ -17,8 +19,8 @@ public class ErrorResponse extends Response {
     }
 
     @Override
-    public String getResponseText() {
-        return "Invalid response: " + getMessage();
+    public List<String> getMessages() {
+        return List.of("Invalid response: " + getMessage());
     }
 
     public String getMessage() {

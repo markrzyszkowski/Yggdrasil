@@ -24,7 +24,7 @@ public class WeatherDataProvider extends AbstractRestfulDataProvider {
     private Logger LOGGER = LoggerFactory.getLogger(WeatherDataProvider.class);
 
     @Override
-    protected boolean canProcess(Request request) {
+    public boolean canProcess(Request request) {
         return request instanceof WeatherRequest;
     }
 

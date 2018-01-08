@@ -8,4 +8,5 @@ import com.github.asgardbot.commons.Response;
 public interface DataProvider {
 
     Response process(Request request) throws InvalidRequestException, InvalidResponseException;
+    boolean canProcess(Request request);
 }

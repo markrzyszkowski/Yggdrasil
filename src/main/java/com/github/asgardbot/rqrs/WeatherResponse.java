@@ -3,6 +3,7 @@ package com.github.asgardbot.rqrs;
 import com.github.asgardbot.commons.Response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,10 +17,10 @@ public class WeatherResponse extends Response {
     }
 
     @Override
-    public String getResponseText() {
-        return data.entrySet().stream()
-                   .map(e -> String.format("%s: %s", e.getKey(), e.getValue()))
-                   .collect(Collectors.joining(" "));
+    public List<String> getMessages() {
+        return List.of(data.entrySet().stream()
+                           .map(e -> String.format("%s: %s", e.getKey(), e.getValue()))
+                           .collect(Collectors.joining(" ")));
     }
 
     @Override

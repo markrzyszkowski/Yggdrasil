@@ -2,6 +2,8 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Response;
 
+import java.util.List;
+
 public class TranslationResponse extends Response {
 
     private String text;
@@ -12,8 +14,8 @@ public class TranslationResponse extends Response {
     }
 
     @Override
-    public String getResponseText() {
-        return text;
+    public List<String> getMessages() {
+        return List.of(text);
     }
 
     @Override

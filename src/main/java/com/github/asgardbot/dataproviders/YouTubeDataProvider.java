@@ -32,12 +32,13 @@ public class YouTubeDataProvider implements DataProvider {
     public YouTubeResponse process(Request request) throws InvalidResponseException {
         LOGGER.info("Attempting to process a request");
         LOGGER.debug(request.toString());
-        if (request instanceof YouTubeRequest) {
-            YouTubeRequest rq = (YouTubeRequest)request;
-            return getYouTubeResponse(rq);
-        }
-        LOGGER.debug("Not able to process request");
-        return null;
+        YouTubeRequest rq = (YouTubeRequest)request;
+        return getYouTubeResponse(rq);
+    }
+
+    @Override
+    public boolean canProcess(Request request) {
+        return request instanceof YouTubeRequest;
     }
 
     private YouTubeResponse getYouTubeResponse(YouTubeRequest request) throws InvalidResponseException {

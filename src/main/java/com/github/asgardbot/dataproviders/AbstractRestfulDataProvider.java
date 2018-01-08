@@ -10,7 +10,7 @@ public abstract class AbstractRestfulDataProvider implements DataProvider {
 
     protected abstract Logger getLogger();
 
-    protected abstract boolean canProcess(Request request);
+    public abstract boolean canProcess(Request request);
 
     protected abstract String prepareRequest(Request request) throws InvalidRequestException;
 
@@ -32,19 +32,13 @@ public abstract class AbstractRestfulDataProvider implements DataProvider {
     public Response process(Request request) throws InvalidRequestException, InvalidResponseException {
         getLogger().info("Attempting to process a request");
         getLogger().debug(request.toString());
-        if (canProcess(request)) {
-            getLogger().info("Able to process request");
 
-            String preparedRequest = prepareRequest(request);
-            getLogger().trace("Prepared request: {}", preparedRequest);
+        String preparedRequest = prepareRequest(request);
+        getLogger().debug("Prepared request: {}", preparedRequest);
 
-            String response = communicate(preparedRequest);
-            getLogger().trace("Retrieved response: {}", response);
+        String response = communicate(preparedRequest);
+        getLogger().debug("Retrieved response: {}", response);
 
-            return processResponse(response);
-        } else {
-            getLogger().debug("Not able to process request");
-            return null;
-        }
+        return processResponse(response);
     }
 }

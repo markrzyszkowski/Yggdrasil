@@ -20,4 +20,4 @@ install:
   - true
 
 script:
-  - ./gradlew build
+  - ./gradlew build -i

@@ -34,12 +34,13 @@ public class GoogleSearchDataProvider implements DataProvider {
     public GoogleSearchResponse process(Request request) throws InvalidResponseException {
         LOGGER.info("Attempting to process a request");
         LOGGER.debug(request.toString());
-        if (request instanceof GoogleSearchRequest) {
-            GoogleSearchRequest rq = (GoogleSearchRequest)request;
-            return getGoogleSearchResponse(rq);
-        }
-        LOGGER.debug("Not able to process request");
-        return null;
+        GoogleSearchRequest rq = (GoogleSearchRequest)request;
+        return getGoogleSearchResponse(rq);
+    }
+
+    @Override
+    public boolean canProcess(Request request) {
+        return request instanceof GoogleSearchRequest;
     }
 
     private GoogleSearchResponse getGoogleSearchResponse(GoogleSearchRequest request) throws InvalidResponseException {

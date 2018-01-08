@@ -2,13 +2,15 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Response;
 
+import java.util.List;
+
 public class UppercaseResponse extends Response {
 
     private String value;
 
     @Override
-    public String getResponseText() {
-        return getValue();
+    public List<String> getMessages() {
+        return List.of(getValue());
     }
 
     public String getValue() {

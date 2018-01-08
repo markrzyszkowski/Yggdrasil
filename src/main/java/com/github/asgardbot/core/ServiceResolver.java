@@ -29,10 +29,10 @@ public class ServiceResolver implements DataProvider {
         LOGGER.info("Trying to find a service for request");
         for (DataProvider service : services) {
             LOGGER.debug("Trying to match request to {}", service);
-            Response candidate = service.process(request);
-            if (candidate != null) {
+
+            if (service.canProcess(request)) {
                 LOGGER.info("Matched request to {}", service);
-                response = candidate;
+                response = service.process(request);
                 break;
             }
         }
@@ -41,5 +41,10 @@ public class ServiceResolver implements DataProvider {
             throw new InvalidRequestException(request);
         }
         return response;
+    }
+
+    @Override
+    public boolean canProcess(Request request) {
+        return true;
     }
 }

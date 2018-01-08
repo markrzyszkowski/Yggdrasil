@@ -25,12 +25,13 @@ public class WikipediaDataProvider implements DataProvider {
     public WikipediaResponse process(Request request) throws InvalidResponseException {
         LOGGER.info("Attempting to process a request");
         LOGGER.debug(request.toString());
-        if (request instanceof WikipediaRequest) {
-            WikipediaRequest rq = (WikipediaRequest)request;
-            return getWikipediaResponse(rq);
-        }
-        LOGGER.debug("Not able to process request");
-        return null;
+        WikipediaRequest rq = (WikipediaRequest)request;
+        return getWikipediaResponse(rq);
+    }
+
+    @Override
+    public boolean canProcess(Request request) {
+        return request instanceof WikipediaRequest;
     }
 
     private WikipediaResponse getWikipediaResponse(WikipediaRequest request) throws InvalidResponseException {
@@ -39,7 +40,7 @@ public class WikipediaDataProvider implements DataProvider {
             String response = wiki.getTextExtract(request.getQuery());
             LOGGER.debug(response);
             String excerpt = response != null
-                             ? getSomeSentences(response, 5)
+                             ? getSomeSentences(response, 15)
                              : String.format("Article with title %s does not exist", request.getQuery());
             return new WikipediaResponse().withText(excerpt);
         } catch (Exception e) {
@@ -52,7 +53,7 @@ public class WikipediaDataProvider implements DataProvider {
         StringTokenizer tokenizer = new StringTokenizer(response, ".");
         StringBuilder builder = new StringBuilder();
         int count = 0;
-        while (tokenizer.hasMoreTokens() && count < 5) {
+        while (tokenizer.hasMoreTokens() && count < n) {
             builder.append(tokenizer.nextToken()).append('.');
             count++;
         }

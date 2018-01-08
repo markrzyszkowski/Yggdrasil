@@ -24,9 +24,9 @@ public class RestDispatcher implements ResponseDispatcher {
         if (awaitedResponses.contains(transactionId)) {
             LOGGER.info("Response produced for {}", transactionId);
             awaitedResponses.remove(transactionId);
-            final String responseText = response.getResponseText();
-            LOGGER.debug("Response contents: {}", responseText);
-            pendingResponses.add(responseText);
+            List<String> responses = response.getMessages();
+            LOGGER.debug("Response contents: {}", responses);
+            pendingResponses.addAll(responses);
         }
     }
 

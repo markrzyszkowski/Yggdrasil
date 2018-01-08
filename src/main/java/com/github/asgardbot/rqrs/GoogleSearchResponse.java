@@ -4,6 +4,7 @@ import com.github.asgardbot.commons.Response;
 import com.google.api.services.customsearch.model.Result;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GoogleSearchResponse extends Response {
 
@@ -15,17 +16,15 @@ public class GoogleSearchResponse extends Response {
     }
 
     @Override
-    public String getResponseText() {
-        StringBuilder builder = new StringBuilder();
+    public List<String> getMessages() {
         if (results != null && !results.isEmpty()) {
-            results.stream().limit(5).forEach(result -> builder.append(result.getTitle())
-                                                               .append(": ")
-                                                               .append(result.getLink())
-                                                               .append(System.lineSeparator()));
+            return results.stream()
+                          .limit(5)
+                          .map(result -> result.getTitle() + ": " + result.getLink())
+                          .collect(Collectors.toList());
         } else {
-            builder.append("No items matching query found");
+            return List.of("No items matching query found");
         }
-        return builder.toString();
     }
 
     @Override
