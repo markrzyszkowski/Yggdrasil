@@ -4,7 +4,10 @@ import com.github.asgardbot.commons.*;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import java.nio.charset.Charset;
 
 public abstract class AbstractRestfulDataProvider implements DataProvider {
 
@@ -16,8 +19,15 @@ public abstract class AbstractRestfulDataProvider implements DataProvider {
 
     protected abstract Response processResponse(String response) throws InvalidResponseException;
 
+    private RestTemplate newRestTemplate() {
+        RestTemplate rt = new RestTemplate();
+        rt.getMessageConverters()
+          .add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
+        return rt;
+    }
+
     private String communicate(String request) {
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = newRestTemplate();
 
         getLogger().info("Attempting to communicate with data provider");
 
