@@ -5,7 +5,7 @@ import com.github.asgardbot.commons.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsResponse extends Response {
+public class NewsResponse extends Response<NewsResponse> {
 
     private List<String> headlines = new ArrayList<>();
 

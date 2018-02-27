@@ -43,7 +43,7 @@ public class MessengerCallbackHandler {
         try {
             return ResponseEntity.ok(receiveClient.verifyWebhook(mode, verifyToken, challenge));
         } catch (MessengerVerificationException e) {
-            LOGGER.error("Webhook verification failed: {}", e);
+            LOGGER.error("Webhook verification failed: '{}'", e);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
     }
@@ -56,7 +56,7 @@ public class MessengerCallbackHandler {
             receiveClient.processCallbackPayload(payload, signature);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (MessengerVerificationException e) {
-            LOGGER.error("Messenger callback processing failed: {}", e);
+            LOGGER.error("Messenger callback processing failed: '{}'", e);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }

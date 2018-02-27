@@ -4,7 +4,7 @@ import com.github.asgardbot.commons.Response;
 
 import java.util.List;
 
-public class WikipediaResponse extends Response {
+public class WikipediaResponse extends Response<WikipediaResponse> {
 
     private String text;
 

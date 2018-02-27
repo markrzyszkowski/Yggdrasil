@@ -3,6 +3,7 @@ package com.github.asgardbot.chat.messenger;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.core.MessageDispatcher;
 import com.github.asgardbot.parsing.Parser;
+import com.github.asgardbot.parsing.QueryDto;
 import com.github.asgardbot.rqrs.ErrorResponse;
 import com.github.messenger4j.exceptions.MessengerApiException;
 import com.github.messenger4j.exceptions.MessengerIOException;
@@ -60,13 +61,13 @@ public class EventHandlers {
                 LOGGER.error("Could not set typing indicator to 'on'");
             }
 
-            Request request = parser.parse(messageText);
+            Request request = parser.parse(new QueryDto().withQueryText(messageText).withSessionId(senderId));
             responseDispatcher.awaitResponse(senderId);
             if (request != null) {
                 router.enqueueRequest(request.withTransactionId(senderId));
             } else {
-                LOGGER.error("Invalid query string {}", messageText);
-                responseDispatcher.enqueueResponse(new ErrorResponse("Invalid query string", null)
+                LOGGER.error("Failed to parse query '{}'", messageText);
+                responseDispatcher.enqueueResponse(new ErrorResponse("Something went wrong", null)
                                                            .withTransactionId(senderId));
             }
         };
@@ -99,7 +100,7 @@ public class EventHandlers {
         return event -> {
             LOGGER.info("Received FallbackEvent");
             String senderId = event.getSender().getId();
-            LOGGER.debug("Received unsupported message from user '{}': {}", senderId, event);
+            LOGGER.debug("Received unsupported message from user '{}': '{}'", senderId, event);
         };
     }
 }

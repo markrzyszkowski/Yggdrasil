@@ -11,9 +11,9 @@ public class UppercaseParser implements Parser {
     private Logger LOGGER = LoggerFactory.getLogger(UppercaseParser.class);
 
     @Override
-    public UppercaseRequest parse(String query) {
-        LOGGER.debug("Attempting to parse {}", query);
-        String[] tokens = query.split(" ");
+    public UppercaseRequest parse(QueryDto query) {
+        LOGGER.debug("Attempting to parse '{}'", query);
+        String[] tokens = query.getQueryText().split(" ");
         if (tokens.length == 2 && tokens[0].equalsIgnoreCase("!upper")) {
             LOGGER.info("Query matched");
             String phrase = tokens[1];

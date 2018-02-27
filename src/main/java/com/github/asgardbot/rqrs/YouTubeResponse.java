@@ -7,7 +7,7 @@ import com.google.api.services.youtube.model.SearchResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class YouTubeResponse extends Response {
+public class YouTubeResponse extends Response<YouTubeResponse> {
 
     private List<SearchResult> results;
 

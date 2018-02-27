@@ -4,7 +4,7 @@ import com.github.asgardbot.commons.Response;
 
 import java.util.List;
 
-public class UppercaseResponse extends Response {
+public class UppercaseResponse extends Response<UppercaseResponse> {
 
     private String value;
 

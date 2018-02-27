@@ -4,7 +4,7 @@ import com.github.asgardbot.commons.Response;
 
 import java.util.List;
 
-public class ErrorResponse extends Response {
+public class ErrorResponse extends Response<ErrorResponse> {
 
     private Throwable cause;
     private String message;

@@ -13,4 +13,3 @@ public class StartContextTest {
     public void main_context_shouldStart() {
     }
 }
-

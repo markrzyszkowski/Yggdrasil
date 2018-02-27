@@ -44,10 +44,10 @@ public abstract class AbstractRestfulDataProvider implements DataProvider {
         getLogger().debug(request.toString());
 
         String preparedRequest = prepareRequest(request);
-        getLogger().debug("Prepared request: {}", preparedRequest);
+        getLogger().debug("Prepared request: '{}'", preparedRequest);
 
         String response = communicate(preparedRequest);
-        getLogger().debug("Retrieved response: {}", response);
+        getLogger().debug("Retrieved response: '{}'", response);
 
         return processResponse(response);
     }

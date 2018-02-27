@@ -6,7 +6,7 @@ import com.google.api.services.customsearch.model.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GoogleSearchResponse extends Response {
+public class GoogleSearchResponse extends Response<GoogleSearchResponse> {
 
     private List<Result> results;
 

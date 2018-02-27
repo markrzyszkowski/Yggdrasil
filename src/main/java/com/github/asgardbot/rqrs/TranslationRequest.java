@@ -2,7 +2,7 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Request;
 
-public class TranslationRequest extends Request {
+public class TranslationRequest extends Request<TranslationRequest> {
 
     private String translationDirection;
     private String text;

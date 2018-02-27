@@ -2,7 +2,7 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Request;
 
-public class WikipediaRequest extends Request {
+public class WikipediaRequest extends Request<WikipediaRequest> {
 
     private String query;
 

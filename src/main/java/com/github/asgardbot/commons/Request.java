@@ -1,12 +1,13 @@
 package com.github.asgardbot.commons;
 
-public abstract class Request {
+public abstract class Request<T extends Request<T>> {
 
     protected String transactionId;
 
-    public Request withTransactionId(String transactionId) {
+    @SuppressWarnings("unchecked")
+    public T withTransactionId(String transactionId) {
         this.transactionId = transactionId;
-        return this;
+        return (T)this;
     }
 
     public String getTransactionId() {

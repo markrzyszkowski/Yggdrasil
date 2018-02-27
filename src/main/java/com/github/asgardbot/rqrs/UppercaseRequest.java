@@ -2,7 +2,7 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Request;
 
-public class UppercaseRequest extends Request {
+public class UppercaseRequest extends Request<UppercaseRequest> {
 
     private String value;
 

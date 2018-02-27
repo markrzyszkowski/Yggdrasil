@@ -14,9 +14,9 @@ public class GoogleSearchParser implements Parser {
     private Logger LOGGER = LoggerFactory.getLogger(GoogleSearchParser.class);
 
     @Override
-    public GoogleSearchRequest parse(String query) {
-        LOGGER.debug("Attempting to parse {}", query);
-        String[] tokens = query.split(" ");
+    public GoogleSearchRequest parse(QueryDto query) {
+        LOGGER.debug("Attempting to parse '{}'", query);
+        String[] tokens = query.getQueryText().split(" ");
         if (tokens.length >= 2 && (tokens[0].equalsIgnoreCase("!search")
                                    || tokens[0].equalsIgnoreCase("!imagesearch"))) {
             LOGGER.info("Query matched");

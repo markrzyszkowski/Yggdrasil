@@ -28,10 +28,10 @@ public class ServiceResolver implements DataProvider {
         Response response = null;
         LOGGER.info("Trying to find a service for request");
         for (DataProvider service : services) {
-            LOGGER.debug("Trying to match request to {}", service);
+            LOGGER.debug("Trying to match request to '{}'", service);
 
             if (service.canProcess(request)) {
-                LOGGER.info("Matched request to {}", service);
+                LOGGER.info("Matched request to '{}'", service);
                 response = service.process(request);
                 break;
             }

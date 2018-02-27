@@ -14,9 +14,9 @@ public class WikipediaParser implements Parser {
     private Logger LOGGER = LoggerFactory.getLogger(WikipediaParser.class);
 
     @Override
-    public WikipediaRequest parse(String query) {
-        LOGGER.debug("Attempting to parse {}", query);
-        String[] tokens = query.split(" ");
+    public WikipediaRequest parse(QueryDto query) {
+        LOGGER.debug("Attempting to parse '{}'", query);
+        String[] tokens = query.getQueryText().split(" ");
         if (tokens.length >= 2 && tokens[0].equalsIgnoreCase("!wiki")) {
             LOGGER.info("Query matched");
             final String title = Arrays.stream(tokens)

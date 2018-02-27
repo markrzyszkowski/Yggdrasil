@@ -46,7 +46,6 @@ public class YouTubeDataProvider implements DataProvider {
         try {
             YouTube.Search.List search = youTube.search().list("id,snippet");
             search.setKey(apiKey)
-                  .setType(request.getType())
                   .setQ(request.getQuery())
                   .setMaxResults(5L);
             List<SearchResult> response = search.execute().getItems();

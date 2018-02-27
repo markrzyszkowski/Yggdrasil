@@ -4,7 +4,7 @@ import com.github.asgardbot.commons.Response;
 
 import java.util.List;
 
-public class TranslationResponse extends Response {
+public class TranslationResponse extends Response<TranslationResponse> {
 
     private String text;
 

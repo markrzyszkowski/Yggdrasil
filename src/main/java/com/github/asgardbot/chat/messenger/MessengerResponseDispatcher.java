@@ -33,10 +33,10 @@ public class MessengerResponseDispatcher implements ResponseDispatcher {
     public void enqueueResponse(Response response) {
         String transactionId = response.getTransactionId();
         if (awaitedResponses.contains(transactionId)) {
-            LOGGER.info("Response produced for {}", transactionId);
+            LOGGER.info("Response produced for '{}'", transactionId);
             awaitedResponses.remove(transactionId);
             List<String> responses = response.getMessages();
-            LOGGER.debug("Response contents: {}", responses);
+            LOGGER.debug("Response contents: '{}'", responses);
 
             responses.forEach(s -> sendTextMessage(transactionId, s));
         }
@@ -44,7 +44,7 @@ public class MessengerResponseDispatcher implements ResponseDispatcher {
 
     @Override
     public void awaitResponse(String transactionId) {
-        LOGGER.info("Awaiting a response to {}", transactionId);
+        LOGGER.info("Awaiting a response to '{}'", transactionId);
         awaitedResponses.add(transactionId);
     }
 

@@ -45,15 +45,18 @@ public class MessageRouter implements MessageDispatcher {
             Response response;
             try {
                 response = serviceResolver.process(request);
+                if (response == null) {
+                    throw new InvalidResponseException(null);
+                }
             } catch (InvalidRequestException e) {
                 response = new ErrorResponse("Could not process request ", e);
-                LOGGER.error("Invalid request {}", e.getRequest());
+                LOGGER.error("Invalid request '{}'", e.getRequest());
             } catch (InvalidResponseException e) {
                 response = new ErrorResponse("Could not process response", e);
-                LOGGER.error("Invalid response {}", e.getResponse());
+                LOGGER.error("Invalid response '{}'", e.getResponse());
             } catch (HttpStatusCodeException e) {
                 response = new ErrorResponse("Server responded with an error code " + e.getStatusCode(), e);
-                LOGGER.error("Error code {} from external API for request {}", e.getStatusCode(), request);
+                LOGGER.error("Error code '{}' from external API for request '{}'", e.getStatusCode(), request);
             }
 
             response.withTransactionId(request.getTransactionId());

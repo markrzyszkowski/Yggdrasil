@@ -12,9 +12,9 @@ public class HelpParser implements Parser {
     private Logger LOGGER = LoggerFactory.getLogger(HelpParser.class);
 
     @Override
-    public Request parse(String query) {
-        LOGGER.debug("Attempting to parse {}", query);
-        if (query.equalsIgnoreCase("!help")) {
+    public Request parse(QueryDto query) {
+        LOGGER.debug("Attempting to parse '{}'", query);
+        if (query.getQueryText().equalsIgnoreCase("!help")) {
             LOGGER.info("Query matched");
             return new HelpRequest();
         }

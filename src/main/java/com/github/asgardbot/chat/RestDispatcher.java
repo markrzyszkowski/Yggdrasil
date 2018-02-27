@@ -22,17 +22,17 @@ public class RestDispatcher implements ResponseDispatcher {
         final String transactionId = response.getTransactionId();
 
         if (awaitedResponses.contains(transactionId)) {
-            LOGGER.info("Response produced for {}", transactionId);
+            LOGGER.info("Response produced for '{}'", transactionId);
             awaitedResponses.remove(transactionId);
             List<String> responses = response.getMessages();
-            LOGGER.debug("Response contents: {}", responses);
+            LOGGER.debug("Response contents: '{}'", responses);
             pendingResponses.addAll(responses);
         }
     }
 
     @Override
     public void awaitResponse(String transactionId) {
-        LOGGER.info("Awaiting a response to {}", transactionId);
+        LOGGER.info("Awaiting a response to '{}'", transactionId);
         awaitedResponses.add(transactionId);
     }
 

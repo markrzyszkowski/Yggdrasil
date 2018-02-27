@@ -2,22 +2,12 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Request;
 
-public class YouTubeRequest extends Request {
+public class YouTubeRequest extends Request<YouTubeRequest> {
 
-    private String type;
     private String query;
-
-    public String getType() {
-        return type;
-    }
 
     public String getQuery() {
         return query;
-    }
-
-    public YouTubeRequest withType(String type) {
-        this.type = type;
-        return this;
     }
 
     public YouTubeRequest withQuery(String query) {
@@ -28,7 +18,6 @@ public class YouTubeRequest extends Request {
     @Override
     public String toString() {
         return "YouTubeRequest{" +
-               "type='" + type + '\'' +
                ", query='" + query + '\'' +
                ", transactionId='" + transactionId + '\'' +
                '}';

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class WeatherResponse extends Response {
+public class WeatherResponse extends Response<WeatherResponse> {
 
     private Map<String, String> data = new HashMap<>();
 

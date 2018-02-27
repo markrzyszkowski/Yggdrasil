@@ -2,7 +2,7 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Request;
 
-public class WeatherRequest extends Request {
+public class WeatherRequest extends Request<WeatherRequest> {
 
     private String city;
 

@@ -2,15 +2,16 @@ package com.github.asgardbot.commons;
 
 import java.util.List;
 
-public abstract class Response {
+public abstract class Response<T extends Response<T>> {
 
     protected String transactionId;
 
     public abstract List<String> getMessages();
 
-    public Response withTransactionId(String transactionId) {
+    @SuppressWarnings("unchecked")
+    public T withTransactionId(String transactionId) {
         this.transactionId = transactionId;
-        return this;
+        return (T)this;
     }
 
     public String getTransactionId() {

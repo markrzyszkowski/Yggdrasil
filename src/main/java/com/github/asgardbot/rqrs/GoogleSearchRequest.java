@@ -2,7 +2,7 @@ package com.github.asgardbot.rqrs;
 
 import com.github.asgardbot.commons.Request;
 
-public class GoogleSearchRequest extends Request {
+public class GoogleSearchRequest extends Request<GoogleSearchRequest> {
 
     private String query;
     private String type;

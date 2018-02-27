@@ -4,6 +4,7 @@ import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.parsing.Parser;
 import com.github.asgardbot.rqrs.HelpRequest;
 import com.github.asgardbot.rqrs.HelpResponse;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class HelpDataProvider implements DataProvider {
 
     private List<String> commands;
 
-    public HelpDataProvider(Set<Parser> parsers) {
+    public HelpDataProvider(@Lazy Set<Parser> parsers) {
         commands = parsers.stream()
                           .map(Parser::getCommand)
                           .filter(Objects::nonNull)
