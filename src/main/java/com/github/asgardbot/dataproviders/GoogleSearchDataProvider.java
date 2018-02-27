@@ -51,6 +51,7 @@ public class GoogleSearchDataProvider implements DataProvider {
                   .setCx(searchEngine)
                   .setSearchType(request.getType());
             List<Result> response = search.execute().getItems();
+            LOGGER.debug(response.toString());
             return new GoogleSearchResponse().withResults(response);
         } catch (Exception e) {
             LOGGER.error(e.toString());

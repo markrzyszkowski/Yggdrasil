@@ -38,7 +38,7 @@ public class WikipediaDataProvider implements DataProvider {
         LOGGER.info("Able to process request");
         try {
             String response = wiki.getTextExtract(request.getQuery());
-            LOGGER.debug(response);
+            LOGGER.debug("Wikipedia responded with: '{}'", response);
             String excerpt = response != null
                              ? getSomeSentences(response, 15)
                              : String.format("Article with title %s does not exist", request.getQuery());

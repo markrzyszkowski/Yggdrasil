@@ -7,7 +7,7 @@ public class WikipediaRequest extends Request<WikipediaRequest> {
     private String query;
 
     public WikipediaRequest withQuery(String query) {
-        this.query = query;
+        this.query = Character.toUpperCase(query.charAt(0)) + query.substring(1);
         return this;
     }
 

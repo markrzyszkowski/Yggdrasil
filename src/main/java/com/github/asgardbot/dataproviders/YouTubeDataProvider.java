@@ -49,6 +49,7 @@ public class YouTubeDataProvider implements DataProvider {
                   .setQ(request.getQuery())
                   .setMaxResults(5L);
             List<SearchResult> response = search.execute().getItems();
+            LOGGER.debug(response.toString());
             return new YouTubeResponse().withResults(response);
         } catch (Exception e) {
             LOGGER.error(e.toString());
