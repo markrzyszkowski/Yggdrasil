@@ -1,6 +1,5 @@
 package com.github.asgardbot.dataproviders;
 
-import com.github.asgardbot.commons.InvalidResponseException;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.rqrs.WikipediaRequest;
 import com.github.asgardbot.rqrs.WikipediaResponse;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.StringTokenizer;
 
 @Component
-public class WikipediaDataProvider implements DataProvider {
+class WikipediaDataProvider implements DataProvider {
 
     private final Wiki wiki;
     private Logger LOGGER = LoggerFactory.getLogger(WikipediaDataProvider.class);
@@ -22,7 +21,7 @@ public class WikipediaDataProvider implements DataProvider {
     }
 
     @Override
-    public WikipediaResponse process(Request request) throws InvalidResponseException {
+    public WikipediaResponse process(Request request) {
         LOGGER.info("Attempting to process a request");
         LOGGER.debug(request.toString());
         WikipediaRequest rq = (WikipediaRequest)request;
@@ -34,19 +33,14 @@ public class WikipediaDataProvider implements DataProvider {
         return request instanceof WikipediaRequest;
     }
 
-    private WikipediaResponse getWikipediaResponse(WikipediaRequest request) throws InvalidResponseException {
+    private WikipediaResponse getWikipediaResponse(WikipediaRequest request) {
         LOGGER.info("Able to process request");
-        try {
-            String response = wiki.getTextExtract(request.getQuery());
-            LOGGER.debug("Wikipedia responded with: '{}'", response);
-            String excerpt = response != null
-                             ? getSomeSentences(response, 15)
-                             : String.format("Article with title %s does not exist", request.getQuery());
-            return new WikipediaResponse().withText(excerpt);
-        } catch (Exception e) {
-            LOGGER.error(e.toString());
-            throw new InvalidResponseException(null);
-        }
+        String response = wiki.getTextExtract(request.getQuery());
+        LOGGER.debug("Wikipedia responded with: '{}'", response);
+        String excerpt = response != null
+                         ? getSomeSentences(response, 15)
+                         : String.format("Article with title %s does not exist", request.getQuery());
+        return new WikipediaResponse().withText(excerpt);
     }
 
     private String getSomeSentences(String response, int n) {

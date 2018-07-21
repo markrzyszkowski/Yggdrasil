@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HelpParser implements Parser {
+class HelpParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(HelpParser.class);
 

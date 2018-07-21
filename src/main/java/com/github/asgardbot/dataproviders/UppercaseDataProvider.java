@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UppercaseDataProvider extends AbstractRestfulDataProvider {
+class UppercaseDataProvider extends AbstractRestfulDataProvider {
 
     private Environment environment;
     private Logger LOGGER = LoggerFactory.getLogger(UppercaseDataProvider.class);

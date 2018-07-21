@@ -2,19 +2,19 @@ package com.github.asgardbot.parsing;
 
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.parsing.nlp.NlpParser;
+import com.github.asgardbot.parsing.nlp.StubNlpParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@Primary
-public class ParserImpl implements Parser {
+@Qualifier("mainParser")
+class ParserImpl implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(ParserImpl.class);
 
@@ -25,7 +25,9 @@ public class ParserImpl implements Parser {
                       @Lazy @Qualifier("nlp") Parser nlpParser) {
         this.nlpParser = nlpParser;
         this.parsers = parsers.stream()
-                              .filter(e -> !(e instanceof ParserImpl || e instanceof NlpParser))
+                              .filter(e -> !(e instanceof ParserImpl
+                                             || e instanceof NlpParser
+                                             || e instanceof StubNlpParser))
                               .collect(Collectors.toSet());
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(this.parsers.toString());

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +18,12 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 @Component
 @Qualifier("nlp")
+@ConditionalOnProperty({"DIALOGFLOW_CREDENTIALS", "DIALOGFLOW_PROJECT_ID"})
 public class NlpParser implements Parser {
 
     private Parser exclamationParser;
     private static final String LANG = "en-US";
     private final Logger LOGGER = LoggerFactory.getLogger(NlpParser.class);
-
 
     @Value("#{systemEnvironment['DIALOGFLOW_PROJECT_ID']}")
     private String PROJECT_ID;
@@ -83,6 +84,11 @@ public class NlpParser implements Parser {
             LOGGER.info("Responding with fulfillment");
             return "!id " + fulfillmentText;
         }
+    }
+
+    @Override
+    public String getCommand() {
+        return "Try also queries in natural language";
     }
 
     private void logDialogflowResults(QueryResult queryResult,

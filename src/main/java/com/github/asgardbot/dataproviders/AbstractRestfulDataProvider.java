@@ -1,6 +1,8 @@
 package com.github.asgardbot.dataproviders;
 
-import com.github.asgardbot.commons.*;
+import com.github.asgardbot.commons.ExternalApiException;
+import com.github.asgardbot.commons.Request;
+import com.github.asgardbot.commons.Response;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,22 +11,27 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 
-public abstract class AbstractRestfulDataProvider implements DataProvider {
+abstract class AbstractRestfulDataProvider implements DataProvider {
 
     protected abstract Logger getLogger();
 
     public abstract boolean canProcess(Request request);
 
-    protected abstract String prepareRequest(Request request) throws InvalidRequestException;
+    @Override
+    public Response process(Request request) throws Exception {
+        getLogger().info("Attempting to process a request");
+        getLogger().debug(request.toString());
 
-    protected abstract Response processResponse(String response) throws InvalidResponseException;
+        String preparedRequest = prepareRequest(request);
+        getLogger().debug("Prepared request: '{}'", preparedRequest);
 
-    private RestTemplate newRestTemplate() {
-        RestTemplate rt = new RestTemplate();
-        rt.getMessageConverters()
-          .add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
-        return rt;
+        String response = communicate(preparedRequest);
+        getLogger().debug("Retrieved response: '{}'", response);
+
+        return processResponse(response);
     }
+
+    protected abstract String prepareRequest(Request request) throws Exception;
 
     private String communicate(String request) {
         RestTemplate restTemplate = newRestTemplate();
@@ -38,17 +45,11 @@ public abstract class AbstractRestfulDataProvider implements DataProvider {
         return response.getBody();
     }
 
-    @Override
-    public Response process(Request request) throws InvalidRequestException, InvalidResponseException {
-        getLogger().info("Attempting to process a request");
-        getLogger().debug(request.toString());
-
-        String preparedRequest = prepareRequest(request);
-        getLogger().debug("Prepared request: '{}'", preparedRequest);
-
-        String response = communicate(preparedRequest);
-        getLogger().debug("Retrieved response: '{}'", response);
-
-        return processResponse(response);
+    private RestTemplate newRestTemplate() {
+        RestTemplate rt = new RestTemplate();
+        rt.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
+        return rt;
     }
+
+    protected abstract Response processResponse(String response) throws Exception;
 }

@@ -4,7 +4,6 @@ import com.github.asgardbot.commons.Response;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class HelpResponse extends Response<HelpResponse> {
 
@@ -12,9 +11,7 @@ public class HelpResponse extends Response<HelpResponse> {
 
     @Override
     public List<String> getMessages() {
-        Stream<String> cmdStream = commands.stream();
-        return List.of(Stream.concat(cmdStream, Stream.of("Try also queries in natural language"))
-                             .collect(Collectors.joining(System.lineSeparator())));
+        return List.of(commands.stream().collect(Collectors.joining(System.lineSeparator())));
     }
 
     public HelpResponse withCommands(List<String> commands) {

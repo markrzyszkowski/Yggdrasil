@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IdentityParser implements Parser {
+class IdentityParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(IdentityParser.class);
 
@@ -22,10 +22,5 @@ public class IdentityParser implements Parser {
             return new IdentityRequest().withText(queryText.substring(4, queryText.length()));
         }
         return null;
-    }
-
-    @Override
-    public String getCommand() {
-        return "!id";
     }
 }

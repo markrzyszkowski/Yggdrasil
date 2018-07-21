@@ -9,25 +9,25 @@ import com.github.asgardbot.dataproviders.DataProvider;
 import com.github.asgardbot.rqrs.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 
+import java.util.Optional;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 @Component
-@Primary
-public class MessageRouter implements MessageDispatcher {
+class MessageRouter implements MessageDispatcher {
 
-    private DataProvider serviceResolver;
+    private DataProvider serviceOrchestrator;
     private ResponseDispatcher responseDispatcher;
     private Logger LOGGER = LoggerFactory.getLogger(MessageRouter.class);
     private BlockingQueue<Request> requests = new ArrayBlockingQueue<>(25);
 
-    public MessageRouter(ServiceResolver serviceResolver, ResponseDispatcher responseDispatcher) {
-        this.serviceResolver = serviceResolver;
+    public MessageRouter(DataProvider serviceOrchestrator, @Qualifier("router") ResponseDispatcher responseDispatcher) {
+        this.serviceOrchestrator = serviceOrchestrator;
         this.responseDispatcher = responseDispatcher;
     }
 
@@ -39,15 +39,13 @@ public class MessageRouter implements MessageDispatcher {
 
     @Scheduled(fixedRate = 100)
     private void process() {
-        while (!requests.isEmpty()) {
+        Request request;
+        while ((request = requests.poll()) != null) {
             LOGGER.debug("Attempting to process a request");
-            Request request = requests.poll();
             Response response;
             try {
-                response = serviceResolver.process(request);
-                if (response == null) {
-                    throw new InvalidResponseException(null);
-                }
+                response = Optional.ofNullable(serviceOrchestrator.process(request))
+                                   .orElseThrow(InvalidResponseException::new);
             } catch (InvalidRequestException e) {
                 response = new ErrorResponse("Could not process request ", e);
                 LOGGER.error("Invalid request '{}'", e.getRequest());
@@ -57,6 +55,9 @@ public class MessageRouter implements MessageDispatcher {
             } catch (HttpStatusCodeException e) {
                 response = new ErrorResponse("Server responded with an error code " + e.getStatusCode(), e);
                 LOGGER.error("Error code '{}' from external API for request '{}'", e.getStatusCode(), request);
+            } catch (Exception e) {
+                response = new ErrorResponse("General error", e);
+                LOGGER.error("Unknown error occurred ", e);
             }
 
             response.withTransactionId(request.getTransactionId());

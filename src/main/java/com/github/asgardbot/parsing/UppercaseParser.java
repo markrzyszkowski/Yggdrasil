@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UppercaseParser implements Parser {
+class UppercaseParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(UppercaseParser.class);
 

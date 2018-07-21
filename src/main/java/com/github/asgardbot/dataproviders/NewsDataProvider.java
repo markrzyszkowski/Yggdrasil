@@ -3,7 +3,6 @@ package com.github.asgardbot.dataproviders;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.github.asgardbot.commons.InvalidResponseException;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.commons.Response;
 import com.github.asgardbot.rqrs.NewsRequest;
@@ -11,12 +10,14 @@ import com.github.asgardbot.rqrs.NewsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class NewsDataProvider extends AbstractRestfulDataProvider {
+@ConditionalOnProperty("NEWSAPI_KEY")
+class NewsDataProvider extends AbstractRestfulDataProvider {
 
     @Value("#{systemEnvironment['NEWSAPI_KEY']}")
     private String apiKey;
@@ -40,25 +41,21 @@ public class NewsDataProvider extends AbstractRestfulDataProvider {
     }
 
     @Override
-    protected Response processResponse(String response) throws InvalidResponseException {
+    protected Response processResponse(String response) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            JsonNode root = mapper.readTree(response);
-            ArrayNode articles = (ArrayNode)root.get("articles");
-            NewsResponse newsResponse = new NewsResponse();
-            for (int i = 0; i < 10; i++) {
-                JsonNode article = articles.get(i);
-                JsonNode sourceName = article.get("source").get("name");
-                JsonNode title = article.get("title");
-                JsonNode url = article.get("url");
-                newsResponse.withHeadline(String.format("%s - %s: %s",
-                                                        sourceName.textValue(),
-                                                        title.textValue(),
-                                                        url.textValue()));
-            }
-            return newsResponse;
-        } catch (IOException e) {
-            throw new InvalidResponseException(null);
+        JsonNode root = mapper.readTree(response);
+        ArrayNode articles = (ArrayNode)root.get("articles");
+        NewsResponse newsResponse = new NewsResponse();
+        for (int i = 0; i < 10; i++) {
+            JsonNode article = articles.get(i);
+            JsonNode sourceName = article.get("source").get("name");
+            JsonNode title = article.get("title");
+            JsonNode url = article.get("url");
+            newsResponse.withHeadline(String.format("%s - %s: %s",
+                                                    sourceName.textValue(),
+                                                    title.textValue(),
+                                                    url.textValue()));
         }
+        return newsResponse;
     }
 }

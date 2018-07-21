@@ -3,7 +3,7 @@ package com.github.asgardbot.chat;
 import com.github.asgardbot.commons.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 @Component
-@Primary
-public class ResponseRouter implements ResponseDispatcher {
+@Qualifier("router")
+class ResponseRouter implements ResponseDispatcher {
 
     private Logger LOGGER = LoggerFactory.getLogger(ResponseRouter.class);
 

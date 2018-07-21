@@ -3,7 +3,6 @@ package com.github.asgardbot.dataproviders;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.github.asgardbot.commons.InvalidResponseException;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.commons.Response;
 import com.github.asgardbot.rqrs.TranslationRequest;
@@ -11,12 +10,14 @@ import com.github.asgardbot.rqrs.TranslationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class TranslationDataProvider extends AbstractRestfulDataProvider {
+@ConditionalOnProperty("TRANSLATE_KEY")
+class TranslationDataProvider extends AbstractRestfulDataProvider {
 
     @Value("#{systemEnvironment['TRANSLATE_KEY']}")
     private String apiKey;
@@ -45,15 +46,11 @@ public class TranslationDataProvider extends AbstractRestfulDataProvider {
     }
 
     @Override
-    protected Response processResponse(String response) throws InvalidResponseException {
+    protected Response processResponse(String response) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            JsonNode root = mapper.readTree(response);
-            ArrayNode texts = (ArrayNode)root.get("text");
-            JsonNode text = texts.get(0);
-            return new TranslationResponse().withText(text.textValue());
-        } catch (IOException e) {
-            throw new InvalidResponseException(null);
-        }
+        JsonNode root = mapper.readTree(response);
+        ArrayNode texts = (ArrayNode)root.get("text");
+        JsonNode text = texts.get(0);
+        return new TranslationResponse().withText(text.textValue());
     }
 }

@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class HelpDataProvider implements DataProvider {
+class HelpDataProvider implements DataProvider {
 
     private List<String> commands;
 

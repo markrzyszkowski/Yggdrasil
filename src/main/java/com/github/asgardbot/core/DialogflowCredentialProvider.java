@@ -2,6 +2,7 @@ package com.github.asgardbot.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,8 @@ import java.io.IOException;
 import static java.lang.System.getProperty;
 
 @Component
-public class DialogflowCredentialProvider {
+@ConditionalOnProperty({"DIALOGFLOW_CREDENTIALS", "DIALOGFLOW_PROJECT_ID"})
+class DialogflowCredentialProvider {
 
     private String DIALOGFLOW_CREDENTIALS;
     private Logger LOGGER = LoggerFactory.getLogger(DialogflowCredentialProvider.class);
@@ -44,3 +46,5 @@ public class DialogflowCredentialProvider {
         }
     }
 }
+
+

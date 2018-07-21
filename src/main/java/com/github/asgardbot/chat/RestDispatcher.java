@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RestController
-public class RestDispatcher implements ResponseDispatcher {
+class RestDispatcher implements ResponseDispatcher {
 
     private List<String> awaitedResponses = new LinkedList<>();
     private List<String> pendingResponses = new LinkedList<>();

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import static com.github.asgardbot.rqrs.IdentityResponse.fromIdRq;
 
 @Component
-public class IdentityDataProvider implements DataProvider {
+class IdentityDataProvider implements DataProvider {
 
     @Override
     public IdentityResponse process(Request request)  {

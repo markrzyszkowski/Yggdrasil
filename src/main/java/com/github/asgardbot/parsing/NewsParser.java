@@ -3,10 +3,12 @@ package com.github.asgardbot.parsing;
 import com.github.asgardbot.rqrs.NewsRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NewsParser implements Parser {
+@ConditionalOnProperty("NEWSAPI_KEY")
+class NewsParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(NewsParser.class);
 

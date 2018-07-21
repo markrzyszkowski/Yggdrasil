@@ -1,10 +1,5 @@
 package com.github.asgardbot.chat;
 
-import com.github.asgardbot.commons.Request;
-import com.github.asgardbot.core.MessageDispatcher;
-import com.github.asgardbot.parsing.Parser;
-import com.github.asgardbot.parsing.QueryDto;
-import com.github.asgardbot.rqrs.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,19 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-public class RestEndpoint {
+class RestEndpoint {
 
-    private MessageDispatcher router;
     private RestDispatcher dispatcher;
+    private RequestReceiver receiver;
     private Logger LOGGER = LoggerFactory.getLogger(RestEndpoint.class);
-    private Parser queryParser;
 
-    public RestEndpoint(MessageDispatcher router,
-                        RestDispatcher dispatcher,
-                        Parser queryParser) {
-        this.router = router;
+    public RestEndpoint(RestDispatcher dispatcher, RequestReceiver receiver) {
         this.dispatcher = dispatcher;
-        this.queryParser = queryParser;
+        this.receiver = receiver;
     }
 
     @GetMapping("/request/{session}/{query}")
@@ -35,16 +26,7 @@ public class RestEndpoint {
         LOGGER.info("New request from REST");
         LOGGER.debug("'{}' '{}'", session, query);
 
-        Request request = queryParser.parse(new QueryDto().withQueryText(query).withSessionId(session));
-        dispatcher.awaitResponse(session);
-
-        if (request != null) {
-            router.enqueueRequest(request.withTransactionId(session));
-        } else {
-            LOGGER.error("Failed to parse query '{}'", query);
-            dispatcher.enqueueResponse(new ErrorResponse("Something went wrong", null)
-                                         .withTransactionId(session));
-        }
+        receiver.handleMessage(session, query, dispatcher);
 
         return new RedirectView("/responses");
     }

@@ -3,10 +3,12 @@ package com.github.asgardbot.parsing;
 import com.github.asgardbot.rqrs.WeatherRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WeatherParser implements Parser {
+@ConditionalOnProperty("OPEN_WEATHER_MAP_KEY")
+class WeatherParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(WeatherParser.class);
 

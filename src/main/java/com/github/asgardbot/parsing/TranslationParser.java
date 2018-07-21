@@ -3,6 +3,7 @@ package com.github.asgardbot.parsing;
 import com.github.asgardbot.rqrs.TranslationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -10,7 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class TranslationParser implements Parser {
+@ConditionalOnProperty("TRANSLATE_KEY")
+class TranslationParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(TranslationParser.class);
     private List<String> languages = List.of("af", "am", "ar", "az", "ba", "be", "bg", "bn", "bs", "ca", "ceb", "cs",

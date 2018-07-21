@@ -1,6 +1,5 @@
 package com.github.asgardbot.dataproviders;
 
-import com.github.asgardbot.commons.InvalidResponseException;
 import com.github.asgardbot.commons.Request;
 import com.github.asgardbot.rqrs.YouTubeRequest;
 import com.github.asgardbot.rqrs.YouTubeResponse;
@@ -11,12 +10,15 @@ import com.google.api.services.youtube.model.SearchResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
-public class YouTubeDataProvider implements DataProvider {
+@ConditionalOnProperty("GOOGLE_KEY")
+class YouTubeDataProvider implements DataProvider {
 
     @Value("#{systemEnvironment['GOOGLE_KEY']}")
     private String apiKey;
@@ -29,7 +31,7 @@ public class YouTubeDataProvider implements DataProvider {
     }
 
     @Override
-    public YouTubeResponse process(Request request) throws InvalidResponseException {
+    public YouTubeResponse process(Request request) throws IOException {
         LOGGER.info("Attempting to process a request");
         LOGGER.debug(request.toString());
         YouTubeRequest rq = (YouTubeRequest)request;
@@ -41,9 +43,8 @@ public class YouTubeDataProvider implements DataProvider {
         return request instanceof YouTubeRequest;
     }
 
-    private YouTubeResponse getYouTubeResponse(YouTubeRequest request) throws InvalidResponseException {
+    private YouTubeResponse getYouTubeResponse(YouTubeRequest request) throws IOException {
         LOGGER.info("Able to process request");
-        try {
             YouTube.Search.List search = youTube.search().list("id,snippet");
             search.setKey(apiKey)
                   .setQ(request.getQuery())
@@ -51,9 +52,5 @@ public class YouTubeDataProvider implements DataProvider {
             List<SearchResult> response = search.execute().getItems();
             LOGGER.debug(response.toString());
             return new YouTubeResponse().withResults(response);
-        } catch (Exception e) {
-            LOGGER.error(e.toString());
-            throw new InvalidResponseException(null);
-        }
     }
 }

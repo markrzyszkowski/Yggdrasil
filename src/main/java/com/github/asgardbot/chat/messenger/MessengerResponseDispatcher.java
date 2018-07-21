@@ -10,6 +10,7 @@ import com.github.messenger4j.send.Recipient;
 import com.github.messenger4j.send.SenderAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component
+@ConditionalOnProperty({"MESSENGER_PAGE_ACCESS_TOKEN", "MESSENGER_APP_SECRET", "MESSENGER_VERIFY_TOKEN"})
 public class MessengerResponseDispatcher implements ResponseDispatcher {
 
     private static final int MESSENGER_MESSAGE_MAX_LENGTH = 320;

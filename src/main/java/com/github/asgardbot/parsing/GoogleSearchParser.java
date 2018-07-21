@@ -3,13 +3,15 @@ package com.github.asgardbot.parsing;
 import com.github.asgardbot.rqrs.GoogleSearchRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Component
-public class GoogleSearchParser implements Parser {
+@ConditionalOnProperty({"GOOGLE_KEY", "SEARCH_ENGINE"})
+class GoogleSearchParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(GoogleSearchParser.class);
 

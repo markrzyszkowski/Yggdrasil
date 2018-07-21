@@ -1,9 +1,9 @@
 group 'com.github.asgardbot'
-version '1.0.0-SNAPSHOT'
+version '1.1.0-SNAPSHOT'
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+        springBootVersion = '2.1.0.BUILD-SNAPSHOT'
     }
     repositories {
         mavenCentral()
@@ -15,12 +15,17 @@ buildscript {
     }
 }
 
+
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-sourceCompatibility = 1.9
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+sourceCompatibility = 1.10
 
 repositories {
     mavenCentral()

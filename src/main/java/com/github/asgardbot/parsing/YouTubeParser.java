@@ -3,13 +3,15 @@ package com.github.asgardbot.parsing;
 import com.github.asgardbot.rqrs.YouTubeRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Component
-public class YouTubeParser implements Parser {
+@ConditionalOnProperty("GOOGLE_KEY")
+class YouTubeParser implements Parser {
 
     private Logger LOGGER = LoggerFactory.getLogger(YouTubeParser.class);
 
