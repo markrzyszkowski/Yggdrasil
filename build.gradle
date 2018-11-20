@@ -1,57 +1,48 @@
 group 'com.github.asgardbot'
-version '1.1.0-SNAPSHOT'
+version '1.1.1-SNAPSHOT'
 
 buildscript {
     ext {
-        springBootVersion = '2.1.0.BUILD-SNAPSHOT'
+        springBootVersion = '2.1.0.RELEASE'
     }
     repositories {
         mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
-
 apply plugin: 'java'
-apply plugin: 'jacoco'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-jacoco {
-    toolVersion = "0.8.1"
-}
-
-sourceCompatibility = 1.10
+sourceCompatibility = JavaVersion.VERSION_1_10
+targetCompatibility = JavaVersion.VERSION_1_10
 
 repositories {
     mavenCentral()
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
     maven { url "https://dl.bintray.com/fastily/maven" }
 }
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('fastily:jwiki:1.4.0')
-    compile('com.google.api-client:google-api-client:1.23.0') {
-        exclude group: 'com.google.guava', module: 'guava-jdk5'
-    }
-    compile('com.google.apis:google-api-services-customsearch:v1-rev57-1.23.0') {
-        exclude group: 'com.google.guava', module: 'guava-jdk5'
-    }
-    compile('com.google.apis:google-api-services-youtube:v3-rev188-1.23.0') {
-        exclude group: 'com.google.guava', module: 'guava-jdk5'
-    }
+    compile('fastily:jwiki:1.7.0')
     compile('com.github.messenger4j:messenger4j:0.8.0')
-    compile('com.google.cloud:google-cloud-dialogflow:0.34.0-alpha') {
+    compile('com.neovisionaries:nv-i18n:1.23')
+    compile('com.google.api-client:google-api-client:1.27.0') {
         exclude group: 'com.google.guava', module: 'guava-jdk5'
     }
-    compile 'com.neovisionaries:nv-i18n:1.22'
+    compile('com.google.apis:google-api-services-customsearch:v1-rev73-1.25.0') {
+        exclude group: 'com.google.guava', module: 'guava-jdk5'
+    }
+    compile('com.google.apis:google-api-services-youtube:v3-rev206-1.25.0') {
+        exclude group: 'com.google.guava', module: 'guava-jdk5'
+    }
+    compile('com.google.cloud:google-cloud-dialogflow:0.71.0-alpha') {
+        exclude group: 'com.google.guava', module: 'guava-jdk5'
+    }
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.mockito:mockito-core:2.+')

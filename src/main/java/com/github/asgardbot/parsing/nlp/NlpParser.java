@@ -28,7 +28,7 @@ public class NlpParser implements Parser {
     @Value("#{systemEnvironment['DIALOGFLOW_PROJECT_ID']}")
     private String PROJECT_ID;
 
-    public NlpParser(@Lazy Parser exclamationParser) {
+    public NlpParser(@Qualifier("mainParser") @Lazy Parser exclamationParser) {
         this.exclamationParser = exclamationParser;
     }
 
