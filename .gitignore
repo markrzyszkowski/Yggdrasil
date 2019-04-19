@@ -8,6 +8,7 @@
 # Build directory
 build/
 out/
+target/
 
 # Compiled class file
 *.class

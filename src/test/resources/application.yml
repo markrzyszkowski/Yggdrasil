@@ -1,0 +1,25 @@
+# Spring debug output
+debug: false
+
+# Global and app logging level
+logging:
+  path: logs/
+  level:
+    root: info
+    com:
+      krzyszkowski:
+        yggdrasil: info
+
+# API endpoint URLs
+dataproviders:
+  openweathermap:
+    endpoint: http://api.openweathermap.org/data/2.5/weather
+  newsapi:
+    endpoint: https://newsapi.org/v2/top-headlines
+  translate:
+    endpoint: https://translate.yandex.net/api/v1.5/tr.json/translate
+
+#end-to-end test variables
+MESSENGER_PAGE_ACCESS_TOKEN: mock
+MESSENGER_APP_SECRET: mock
+MESSENGER_VERIFY_TOKEN: mock

@@ -16,8 +16,6 @@ jdk:
   - oraclejdk11
   - openjdk11
 
-# Skip installation step completely because './gradlew assemble' and later './gradlew check' is actually
-# slower than './gradlew build'
 install:
   - true
 
